@@ -1,1 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dineth | Strategic Brand Partner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fonts: Inter (UI), Playfair Display (Headings), Mrs Saint Delafield (Signature) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Mrs+Saint+Delafield&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+Sinhala:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FFFFFF;
+            --text-color: #111111;
+            --text-light: #666666;
+            --accent: #D4FF00; /* Your Signature Acid Green - Used sparingly */
+            --border: #E5E7EB;
+        }
 
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .signature { font-family: 'Mrs Saint Delafield', cursive; }
+        .sinhala { font-family: 'Noto Serif Sinhala', serif; }
+
+        /* --- PROFESSIONAL GRID --- */
+        .container-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem; /* Adjusted for mobile */
+        }
+        @media (min-width: 768px) {
+            .container-main { padding: 0 2rem; }
+        }
+
+        /* --- GLASS NAV --- */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* --- HIGHLIGHT --- */
+        .highlight {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 35%;
+            background-color: var(--accent);
+            z-index: -1;
+            opacity: 0.6;
+            transition: height 0.3s ease;
+        }
+        .highlight:hover::after {
+            height: 100%; /* Full highlight on hover */
+        }
+
+        /* --- CAPABILITIES (Dark Mode Upgrade) --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1px;
+            background-color: #333; /* Grid lines */
+            border: 1px solid #333;
+        }
+        @media (min-width: 768px) {
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .bento-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .bento-card {
+            background-color: #111;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 280px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .bento-card:hover {
+            background-color: #161616;
+        }
+        /* Hover line indicator */
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .bento-card:hover::before { transform: scaleX(1); }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            transition: transform 0.3s;
+        }
+        .bento-card:hover .service-icon { transform: scale(1.1); background: rgba(212, 255, 0, 0.1); }
+
+        /* --- WORK GALLERY (Visual Upgrade) --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 768px) {
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border-radius: 8px;
+            display: block; /* For anchor tag */
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.05);
+        }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent);
+            opacity: 1; /* Always visible for better accessibility */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+        }
+
+        /* --- BRAND GRID --- */
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background-color: var(--border);
+            border: 1px solid var(--border);
+        }
+        @media (min-width: 768px) {
+            .logo-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        .logo-item {
+            background-color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+            opacity: 0.7;
+        }
+        @media (min-width: 768px) {
+            .logo-item { padding: 2rem; height: 120px; }
+        }
+        .logo-item:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* --- BUTTONS --- */
+        .btn-primary {
+            background-color: #111;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary:hover {
+            background-color: var(--accent);
+            color: black;
+            transform: translateY(-1px);
+        }
+
+        /* --- GAME MODAL (Hidden) --- */
+        #game-modal {
+            backdrop-filter: blur(20px);
+            background: rgba(255,255,255,0.8);
+        }
+
+        /* Utility */
+        ::selection { background: var(--accent); color: black; }
+        .fade-in { opacity: 0; transform: translateY(20px); transition: 0.8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="glass-nav fixed top-0 w-full z-50">
+        <div class="container-main h-20 flex justify-between items-center">
+            <!-- Updated to Signature -->
+            <a href="#" class="signature text-4xl font-bold tracking-wide hover:text-[var(--accent)] transition-colors" style="transform: translateY(4px);">D. Kumarage</a>
+            
+            <div class="hidden md:flex gap-8 text-sm font-medium text-[var(--text-light)]">
+                <a href="#expertise" class="hover:text-black transition-colors">Expertise</a>
+                <a href="#work" class="hover:text-black transition-colors">Work</a>
+                <a href="#insights" class="hover:text-black transition-colors">Insights</a>
+            </div>
+
+            <a href="https://calendly.com" target="_blank" class="btn-primary text-sm">
+                Book Consultation
+            </a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-0">
+
+        <!-- HERO SECTION -->
+        <section class="container-main min-h-[70vh] flex flex-col justify-center mb-24 fade-in">
+            <div class="max-w-4xl">
+                <p class="mono text-xs font-medium text-[var(--text-light)] mb-6 uppercase tracking-widest">
+                    Based in Colombo • Available for 2026
+                </p>
+                
+                <h1 class="text-5xl md:text-7xl lg:text-8xl leading-[1.1] mb-8 text-[#111]">
+                    Bridging the gap between <span class="highlight">corporate strategy</span> and <span class="highlight">digital culture</span>.
+                </h1>
+                
+                <div class="flex flex-col md:flex-row gap-12 items-start md:items-end border-l-2 border-[var(--accent)] pl-8">
+                    <p class="text-xl text-[var(--text-light)] max-w-xl leading-relaxed">
+                        I help visionary organizations clarify their message, modernize their identity, and ship products that define their category.
+                        <br><br>
+                        <span class="signature text-4xl text-black block mt-2">D. Kumarage</span>
+                    </p>
+                    
+                    <a href="#work" class="text-lg font-bold border-b-2 border-black pb-1 hover:text-[var(--text-light)] hover:border-[var(--text-light)] transition-all whitespace-nowrap">
+                        View Case Studies ↓
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAPABILITIES (Dark Mode + SVG Icons) -->
+        <section id="expertise" class="bg-[#111] text-white py-32 mb-32 relative overflow-hidden">
+            <!-- Grid Texture -->
+            <div class="absolute inset-0 pointer-events-none opacity-10" style="background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+            <div class="container-main relative z-10 fade-in">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-800 pb-8">
+                    <div>
+                        <h2 class="text-4xl md:text-5xl font-serif italic mb-2">Capabilities</h2>
+                        <p class="text-gray-400">Comprehensive design & strategy services.</p>
+                    </div>
+                    <span class="mono text-xs text-[var(--accent)] uppercase tracking-widest mt-4 md:mt-0">Core Competencies</span>
+                </div>
+
+                <div class="bento-grid">
+                    <!-- Service 1 -->
+                    <div class="bento-card group">
+                        <div class="service-icon">
+                            <!-- Strategy Icon -->
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 font-sans tracking-tight text-white">Brand Strategy</h3>
+                            <ul class="text-sm text-gray-400 space-y-2 font-mono">
+                                <li>+ Positioning</li>
+                                <li>+ Market Audits</li>
+                                <li>+ Voice & Tone</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="bento-card group">
+                        <div class="service-icon">
+                            <!-- Identity Icon -->
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 font-sans tracking-tight text-white">Visual Identity</h3>
+                            <ul class="text-sm text-gray-400 space-y-2 font-mono">
+                                <li>+ Logo Systems</li>
+                                <li>+ Typography</li>
+                                <li>+ Guidelines</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="bento-card group">
+                        <div class="service-icon">
+                            <!-- Digital Icon -->
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 font-sans tracking-tight text-white">Digital Experience</h3>
+                            <ul class="text-sm text-gray-400 space-y-2 font-mono">
+                                <li>+ Web Design</li>
+                                <li>+ UI/UX Systems</li>
+                                <li>+ Development</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="bento-card group">
+                        <div class="service-icon">
+                            <!-- Growth Icon -->
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 font-sans tracking-tight text-white">Growth & Content</h3>
+                            <ul class="text-sm text-gray-400 space-y-2 font-mono">
+                                <li>+ Campaign Strategy</li>
+                                <li>+ Social Direction</li>
+                                <li>+ Copywriting</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BRAND SHOWCASE -->
+        <section class="container-main mb-32 fade-in">
+            <div class="flex justify-between items-end mb-8">
+                <h2 class="text-2xl font-normal italic">Select Clients</h2>
+                <span class="mono text-xs text-[var(--text-light)]">12+ CLIENTS</span>
+            </div>
+            
+            <div class="logo-grid">
+                <div class="logo-item" title="Apex"><svg height="24" viewBox="0 0 100 24" fill="#333"><text x="0" y="20" font-family="sans-serif" font-weight="900" font-size="20" letter-spacing="2">APEX</text></svg></div>
+                <div class="logo-item" title="Orbit"><svg height="24" viewBox="0 0 100 24" fill="#333"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="3" fill="none"/><text x="30" y="20" font-family="sans-serif" font-weight="600" font-size="18">ORBIT</text></svg></div>
+                <div class="logo-item" title="Naked Theory"><svg height="24" viewBox="0 0 150 24" fill="#333"><text x="0" y="20" font-family="serif" font-weight="bold" font-size="18">Naked Theory.</text></svg></div>
+                <div class="logo-item" title="Velvet"><svg height="24" viewBox="0 0 100 24" fill="#333"><text x="0" y="20" font-family="cursive" font-weight="bold" font-size="18">Velvet</text></svg></div>
+                <div class="logo-item" title="Heartbeat"><svg height="24" viewBox="0 0 120 24" fill="#333"><text x="0" y="20" font-family="sans-serif" font-weight="800" font-size="18">HEARTBEAT</text></svg></div>
+                <div class="logo-item" title="Ooze"><svg height="24" viewBox="0 0 100 24" fill="#333"><rect x="0" y="4" width="16" height="16" rx="4"/><text x="24" y="20" font-family="monospace" font-weight="bold" font-size="18">OOZE</text></svg></div>
+                <div class="logo-item" title="Clerk"><svg height="24" viewBox="0 0 100 24" fill="#333"><text x="0" y="20" font-family="sans-serif" font-weight="bold" font-size="18">CLERK</text></svg></div>
+                <div class="logo-item" title="Halo"><svg height="24" viewBox="0 0 100 24" fill="#333"><circle cx="10" cy="12" r="6" fill="currentColor"/><text x="24" y="20" font-family="sans-serif" font-weight="900" font-size="18">HALO</text></svg></div>
+                <div class="logo-item" title="Linear"><svg height="24" viewBox="0 0 100 24" fill="#333"><text x="0" y="20" font-family="sans-serif" font-weight="bold" font-size="18">LINEAR</text></svg></div>
+                <div class="logo-item" title="Raycast"><svg height="24" viewBox="0 0 100 24" fill="#333"><text x="0" y="20" font-family="sans-serif" font-weight="bold" font-size="18">RAYCAST</text></svg></div>
+                <div class="logo-item" title="Vercel"><svg height="24" viewBox="0 0 100 24" fill="#333"><path d="M10,2 L20,22 H0 L10,2 Z" fill="currentColor"/><text x="25" y="20" font-family="sans-serif" font-weight="bold" font-size="18">VERCEL</text></svg></div>
+                <div class="logo-item" title="Framer"><svg height="24" viewBox="0 0 100 24" fill="#333"><text x="0" y="20" font-family="sans-serif" font-weight="bold" font-size="18">FRAMER</text></svg></div>
+            </div>
+        </section>
+
+        <!-- WORK GALLERY (Image Grid) -->
+        <section id="work" class="container-main mb-32 fade-in">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-200 pb-6">
+                <h2 class="text-4xl font-normal">Selected Work</h2>
+                <span class="mono text-xs text-[var(--text-light)]">Case Studies</span>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Case 1 -->
+                <a href="#" class="gallery-item group">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2670&auto=format&fit=crop" class="gallery-img" alt="Apex Fintech">
+                    <div class="gallery-overlay">
+                        <span class="mono text-[var(--accent)] text-xs font-bold mb-2">FINTECH</span>
+                        <h3 class="text-2xl text-white font-serif italic mb-1">Apex FinTech</h3>
+                        <p class="text-gray-300 text-sm">Series B Rebrand & Identity System</p>
+                    </div>
+                </a>
+
+                <!-- Case 2 -->
+                <a href="#" class="gallery-item group">
+                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2727&auto=format&fit=crop" class="gallery-img" alt="Naked Theory">
+                    <div class="gallery-overlay">
+                        <span class="mono text-[var(--accent)] text-xs font-bold mb-2">AGENCY</span>
+                        <h3 class="text-2xl text-white font-serif italic mb-1">Naked Theory</h3>
+                        <p class="text-gray-300 text-sm">Consultancy Identity</p>
+                    </div>
+                </a>
+
+                <!-- Case 3 -->
+                <a href="#" class="gallery-item group">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop" class="gallery-img" alt="Orbit Labs">
+                    <div class="gallery-overlay">
+                        <span class="mono text-[var(--accent)] text-xs font-bold mb-2">WEB3</span>
+                        <h3 class="text-2xl text-white font-serif italic mb-1">Orbit Labs</h3>
+                        <p class="text-gray-300 text-sm">Corporate Narrative</p>
+                    </div>
+                </a>
+
+                <!-- Case 4 -->
+                <a href="#" class="gallery-item group">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2564&auto=format&fit=crop" class="gallery-img" alt="Velvet">
+                    <div class="gallery-overlay">
+                        <span class="mono text-[var(--accent)] text-xs font-bold mb-2">CPG</span>
+                        <h3 class="text-2xl text-white font-serif italic mb-1">Velvet Coffee</h3>
+                        <p class="text-gray-300 text-sm">Packaging & Campaign</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- INSIGHTS -->
+        <section id="insights" class="container-main mb-32 fade-in">
+            <h2 class="text-3xl font-normal italic mb-12">Written Insights</h2>
+            
+            <div class="grid grid-cols-1 gap-0">
+                <a href="#" class="article-item group block cursor-pointer">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="md:w-3/4">
+                            <span class="mono text-xs text-[var(--accent)] font-bold mb-2 block bg-black text-[var(--accent)] w-max px-2 py-0.5 rounded">STRATEGY</span>
+                            <h3 class="text-2xl font-bold text-[#111] mb-3 leading-tight article-title inline-block">
+                                The Art of "Boring" Design: Why Standard UI Converts Better
+                            </h3>
+                            <p class="text-[var(--text-light)] text-base max-w-2xl leading-relaxed">
+                                Innovation is good, but familiarity converts. An analysis of why tried-and-true enterprise patterns outperform radical redesigns.
+                            </p>
+                        </div>
+                        <span class="mono text-xs text-gray-400 shrink-0">FEB 04, 2026</span>
+                    </div>
+                </a>
+
+                <a href="#" class="article-item group block cursor-pointer">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="md:w-3/4">
+                            <span class="mono text-xs text-[var(--accent)] font-bold mb-2 block bg-black text-[var(--accent)] w-max px-2 py-0.5 rounded">MARKETING</span>
+                            <h3 class="text-2xl font-bold text-[#111] mb-3 leading-tight article-title inline-block">
+                                Why Your Brand Needs a Meme Strategy (Seriously)
+                            </h3>
+                            <p class="text-[var(--text-light)] text-base max-w-2xl leading-relaxed">
+                                Memes are the native language of the internet. Here is how corporate brands can speak it without cringing or losing authority.
+                            </p>
+                        </div>
+                        <span class="mono text-xs text-gray-400 shrink-0">JAN 28, 2026</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="mt-8 text-center md:text-left">
+                <a href="#" class="text-sm font-bold border-b-2 border-black pb-1 hover:text-[var(--text-light)] hover:border-[var(--text-light)] transition-colors">
+                    View Archive →
+                </a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-[#111] text-white pt-24 pb-12 relative overflow-hidden">
+            <!-- Background Grid Texture -->
+            <div class="absolute inset-0 pointer-events-none opacity-10" style="background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+            <div class="container-main relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 border-b border-gray-800 pb-16">
+                    <div>
+                        <h2 class="text-6xl md:text-8xl font-serif italic mb-8 leading-none tracking-tight">Let's build<br>legacy.</h2>
+                        <p class="text-gray-400 text-lg max-w-md mb-10 leading-relaxed">
+                            Currently accepting select strategic partnerships for Q2 2026.
+                        </p>
+                        <a href="mailto:hello@dnetkuma.com" class="btn-primary bg-white text-black hover:bg-[var(--accent)] text-lg px-8 py-4 inline-flex items-center gap-3 group">
+                            <span>hello@dnetkuma.com</span>
+                            <svg class="w-5 h-5 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                        </a>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-16 lg:justify-end items-start pt-4">
+                        <div class="flex flex-col gap-4">
+                            <span class="mono text-xs text-gray-500 uppercase tracking-widest mb-2">Navigation</span>
+                            <a href="#expertise" class="hover:text-[var(--accent)] transition-colors">Expertise</a>
+                            <a href="#work" class="hover:text-[var(--accent)] transition-colors">Selected Work</a>
+                            <a href="#insights" class="hover:text-[var(--accent)] transition-colors">Insights</a>
+                        </div>
+                        
+                        <div class="flex flex-col gap-4">
+                            <span class="mono text-xs text-gray-500 uppercase tracking-widest mb-2">Connect</span>
+                            <a href="#" class="hover:text-[var(--accent)] transition-colors">LinkedIn ↗</a>
+                            <a href="#" class="hover:text-[var(--accent)] transition-colors">Twitter / X ↗</a>
+                            <a href="#" class="hover:text-[var(--accent)] transition-colors">Instagram ↗</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-xs text-gray-500 mono">
+                    <div class="flex flex-col gap-1">
+                        <span class="text-gray-300">© 2026 DINETH <span class="sinhala tracking-normal">| කුමාරගේ</span></span>
+                        <span>All Rights Reserved.</span>
+                    </div>
+                    
+                    <div class="flex items-center gap-6">
+                        <span id="local-time" class="hidden md:inline-block">--:-- --</span>
+                        <span class="w-1 h-1 bg-gray-700 rounded-full hidden md:inline-block"></span>
+                        <span id="game-trigger" class="cursor-pointer hover:text-[var(--accent)] transition-colors decoration-dotted underline underline-offset-4" title="Secret Area">LEGAL & COMPLIANCE</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Large Decorative Text -->
+            <div class="absolute -bottom-4 left-0 w-full overflow-hidden pointer-events-none opacity-[0.03]">
+                <span class="text-[18vw] font-black leading-none text-white whitespace-nowrap block select-none">DINETH</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- HIDDEN GAME -->
+    <div id="game-modal" class="hidden fixed inset-0 z-[100] flex flex-col items-center justify-center p-4">
+        <div class="bg-white p-8 rounded shadow-2xl border border-gray-200 max-w-lg w-full text-center relative">
+            <h3 class="text-3xl font-black mb-2 font-serif italic">The Easter Egg</h3>
+            <p class="text-gray-500 mb-6 text-sm">You found it. Press Space to jump.</p>
+            
+            <div id="game-area" class="bg-gray-50 h-32 w-full mb-6 relative overflow-hidden border-b-2 border-black">
+                <div id="dino" class="w-8 h-8 bg-[var(--accent)] absolute bottom-0 left-10"></div>
+                <div id="obstacle" class="w-6 h-8 bg-black absolute bottom-0 right-0"></div>
+            </div>
+            
+            <button onclick="closeGame()" class="text-xs font-bold uppercase tracking-widest hover:text-red-500">Close Game</button>
+        </div>
+    </div>
+
+    <script>
+        // --- SCROLL REVEAL ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // --- GAME LOGIC ---
+        const trigger = document.getElementById('game-trigger');
+        const modal = document.getElementById('game-modal');
+        const dino = document.getElementById('dino');
+        const obstacle = document.getElementById('obstacle');
+        let isJumping = false;
+        let gameRunning = false;
+
+        trigger.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            gameRunning = true;
+            startGame();
+        });
+
+        function closeGame() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            gameRunning = false;
+            obstacle.style.animation = 'none';
+        }
+
+        function startGame() {
+            obstacle.style.animation = 'slide 1.5s infinite linear';
+            
+            if(!document.getElementById('game-css')) {
+                const style = document.createElement('style');
+                style.id = 'game-css';
+                style.innerHTML = `
+                    @keyframes slide { 0% { right: -30px; } 100% { right: 100%; } }
+                    @keyframes jump { 0% { bottom: 0; } 50% { bottom: 60px; } 100% { bottom: 0; } }
+                    .jump-anim { animation: jump 0.5s ease-out; }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        function jump() {
+            if(!isJumping) {
+                isJumping = true;
+                dino.classList.add('jump-anim');
+                setTimeout(() => {
+                    dino.classList.remove('jump-anim');
+                    isJumping = false;
+                }, 500);
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if(e.code === 'Space' && gameRunning) {
+                e.preventDefault();
+                jump();
+            }
+        });
+        document.getElementById('game-area').addEventListener('click', jump);
+
+        // --- FOOTER TIME ---
+        function updateTime() {
+            const timeDisplay = document.getElementById('local-time');
+            const now = new Date();
+            const options = { timeZone: 'Asia/Colombo', hour: '2-digit', minute: '2-digit', hour12: true };
+            timeDisplay.textContent = now.toLocaleTimeString('en-US', options) + ' CMB';
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
