@@ -1,0 +1,41 @@
+<svg id="favicon-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-2xl">
+                        <defs>
+                            <!-- Vibrant Gradient -->
+                            <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color: rgb(30, 41, 59); stop-opacity: 1;"/>
+                                <stop offset="50%" style="stop-color: rgb(51, 65, 85); stop-opacity: 1;"/>
+                                <stop offset="100%" style="stop-color: rgb(71, 85, 105); stop-opacity: 1;"/>
+                            </linearGradient>
+                            
+                            <!-- Glass Sheen Gradient -->
+                            <linearGradient id="glossGradient" x1="0%" y1="0%" x2="100%" y2="100%" gradientTransform="rotate(45)">
+                                <stop offset="0%" style="stop-color:white;stop-opacity:0.4"/>
+                                <stop offset="45%" style="stop-color:white;stop-opacity:0"/>
+                                <stop offset="100%" style="stop-color:white;stop-opacity:0"/>
+                            </linearGradient>
+
+                            <!-- Inner Shadow for Depth -->
+                            <filter id="inner-depth">
+                                <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+                                <feOffset dx="2" dy="4"/>
+                                <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                                <feFlood flood-color="black" flood-opacity="0.2"/>
+                                <feComposite in2="blur" operator="in"/>
+                                <feComposite in2="SourceGraphic" operator="over"/>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Main Shape (Squircle Approximation) -->
+                        <rect id="bg-shape" x="0" y="0" width="512" height="512" rx="256" fill="url(#mainGradient)"/>
+                        
+                        <!-- Glossy Top Sheen (The "Glass" Effect) -->
+                        <path id="gloss-layer" d="M0 0 H512 V256 Q 256 400 0 256 Z" fill="url(#glossGradient)" clip-path="url(#squircle-clip)" style="mix-blend-mode: overlay; display: none;"/>
+                        
+                        <!-- Text with Depth -->
+                        <text id="main-text" x="50%" y="52%" font-family="'Outfit', sans-serif" font-weight="800" font-size="280" fill="white" text-anchor="middle" dominant-baseline="central" style="text-shadow: 0 10px 20px rgba(0,0,0,0.25);">
+                            DK
+                        </text>
+
+                        <!-- Subtle Inner Ring for realism -->
+                        <rect id="border-ring" x="4" y="4" width="504" height="504" rx="250" stroke="white" stroke-width="8" stroke-opacity="0.15" fill="none" style="opacity: 0.05;"/>
+                    </svg>
