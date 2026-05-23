@@ -16,7 +16,7 @@
             --bg-color: #FFFFFF;
             --text-color: #111111;
             --text-light: #666666;
-            --accent: #D4FF00; /* Signature Acid Green */
+            --accent: #D4FF00;
             --border: #E5E7EB;
         }
 
@@ -33,7 +33,6 @@
         .signature { font-family: 'Mrs Saint Delafield', cursive; }
         .sinhala { font-family: 'Noto Serif Sinhala', serif; }
 
-        /* --- LAYOUT UTILS --- */
         .container-main {
             max-width: 1200px;
             margin: 0 auto;
@@ -49,7 +48,6 @@
             border-bottom: 1px solid var(--border);
         }
 
-        /* --- ACCENTS --- */
         .highlight { position: relative; display: inline-block; z-index: 1; }
         .highlight::after {
             content: '';
@@ -88,36 +86,136 @@
         }
         .bento-card:hover .service-icon { transform: scale(1.1); background: rgba(212, 255, 0, 0.1); }
 
-        /* --- GALLERY --- */
-        .gallery-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        @media (min-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+        /* --- WORK CARDS --- */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background-color: var(--border);
+            border: 1px solid var(--border);
+        }
+        @media (min-width: 768px) { .work-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1024px) { .work-grid { grid-template-columns: repeat(4, 1fr); } }
 
-        .gallery-item {
-            position: relative; aspect-ratio: 4/3; overflow: hidden;
-            border-radius: 8px; display: block; transition: transform 0.3s ease;
+        .work-card {
+            background-color: #fff;
+            padding: 1.75rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 160px;
+            justify-content: space-between;
         }
-        .gallery-item:hover .gallery-img { transform: scale(1.05); }
-        .gallery-img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        .work-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 3px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
         }
-        .gallery-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent);
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
+        .work-card:hover { background-color: #fafafa; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+        .work-card:hover::after { transform: scaleX(1); }
+
+        .work-card-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+        .work-card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-style: italic;
+            color: #111;
+            line-height: 1.3;
+        }
+        .work-card-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            color: var(--text-light);
+            line-height: 1.5;
         }
 
-        /* --- LOGOS --- */
-        .logo-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
-            background-color: var(--border); border: 1px solid var(--border);
+        /* --- ARTICLE STYLES --- */
+        .article-item {
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 0;
+            transition: all 0.2s ease;
         }
-        @media (min-width: 768px) { .logo-grid { grid-template-columns: repeat(4, 1fr); } }
-        .logo-item {
-            background-color: white; padding: 1.5rem; display: flex; align-items: center; justify-content: center;
-            height: 100px; transition: all 0.3s ease; filter: grayscale(100%); opacity: 0.7;
+        .article-item:hover { padding-left: 0.5rem; }
+        .article-title { transition: color 0.2s; }
+        .article-item:hover .article-title { color: var(--text-light); }
+
+        /* --- ARTICLE POPUP --- */
+        #article-modal {
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.7);
         }
-        .logo-item:hover { filter: grayscale(0%); opacity: 1; z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .article-modal-body {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #222;
+        }
+        .article-modal-body p { margin-bottom: 1.4rem; }
+        .article-modal-body h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #111;
+            margin: 2rem 0 0.75rem;
+        }
+        .article-modal-body blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 0.75rem 1.25rem;
+            margin: 1.5rem 0;
+            background: #fafafa;
+            font-style: italic;
+            color: #444;
+        }
+        #article-modal-scroll::-webkit-scrollbar { width: 4px; }
+        #article-modal-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
+        #article-modal-scroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+
+        /* --- CTA STRIP --- */
+        .cta-strip {
+            background: #111;
+            border-top: 3px solid var(--accent);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .cta-strip { flex-direction: row; justify-content: space-between; text-align: left; padding: 2rem 3rem; }
+        }
+
+        /* --- SPOTS BAR --- */
+        .spots-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .spots-fill {
+            height: 100%;
+            width: 60%;
+            background: var(--accent);
+            border-radius: 3px;
+        }
 
         /* --- BTN --- */
         .btn-primary {
@@ -127,7 +225,6 @@
         }
         .btn-primary:hover { background-color: var(--accent); color: black; transform: translateY(-1px); }
 
-        /* --- UTILS --- */
         ::selection { background: var(--accent); color: black; }
         .fade-in { opacity: 0; transform: translateY(20px); transition: 0.8s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -157,7 +254,6 @@
         .lane-1 { left: 33%; }
         .lane-2 { left: 66%; }
 
-        /* Player Car (Acid Green) */
         #player-car {
             position: absolute;
             bottom: 20px;
@@ -169,7 +265,6 @@
             transition: left 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 10;
         }
-        /* Car details */
         #player-car::before {
             content: ''; position: absolute; top: 10px; left: 5px; right: 5px; height: 15px;
             background: rgba(0,0,0,0.8); border-radius: 2px;
@@ -179,7 +274,6 @@
             background: rgba(0,0,0,0.3); border-radius: 2px;
         }
 
-        /* Enemy Car (Black) */
         .enemy-car {
             position: absolute;
             width: 40px;
@@ -191,6 +285,38 @@
         .enemy-car::after {
             content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             color: white; font-size: 10px; font-family: monospace; content: '!!!';
+        }
+
+        /* --- HERO IMAGE --- */
+        .hero-image-frame {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .hero-image-frame img {
+            position: relative;
+            z-index: 1;
+            display: block;
+            border-radius: 4px;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+        .hero-image-badge {
+            position: absolute;
+            bottom: -16px;
+            left: -16px;
+            z-index: 2;
+            background: #111;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-left: 3px solid var(--accent);
+            white-space: nowrap;
         }
 
         @keyframes moveRoad {
@@ -211,7 +337,7 @@
                 <a href="#insights" class="hover:text-black transition-colors">Insights</a>
             </div>
 
-            <a href="https://calendly.com" target="_blank" class="btn-primary text-sm">
+            <a href="https://calendly.com/dnetsachintha/30min" target="_blank" class="btn-primary text-sm">
                 Book Consultation
             </a>
         </div>
@@ -220,28 +346,62 @@
     <main class="pt-32 pb-0">
 
         <section class="container-main min-h-[70vh] flex flex-col justify-center mb-24 fade-in">
-            <div class="max-w-4xl">
-                <p class="mono text-xs font-medium text-[var(--text-light)] mb-6 uppercase tracking-widest">
-                    Based in Colombo • Available for 2026
-                </p>
-                
-                <h1 class="text-5xl md:text-7xl lg:text-8xl leading-[1.1] mb-8 text-[#111]">
-                    Bridging the gap between <span class="highlight">corporate strategy</span> and <span class="highlight">digital culture</span>.
-                </h1>
-                
-                <div class="flex flex-col md:flex-row gap-12 items-start md:items-end border-l-2 border-[var(--accent)] pl-8">
-                    <p class="text-xl text-[var(--text-light)] max-w-xl leading-relaxed">
-                        I help visionary organizations clarify their message, modernize their identity, and ship products that define their category.
-                        <br><br>
-                        <span class="signature text-4xl text-black block mt-2">D. Kumarage</span>
+            <div class="flex flex-col lg:flex-row gap-16 xl:gap-24 items-center">
+
+                <!-- TEXT -->
+                <div class="flex-1 min-w-0">
+                    <p class="mono text-xs font-medium text-[var(--text-light)] mb-6 uppercase tracking-widest">
+                        Based in Colombo • Available for 2026
                     </p>
                     
-                    <a href="#work" class="text-lg font-bold border-b-2 border-black pb-1 hover:text-[var(--text-light)] hover:border-[var(--text-light)] transition-all whitespace-nowrap">
-                        View Case Studies ↓
-                    </a>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl leading-[1.1] mb-8 text-[#111]">
+                        Bridging the gap between <span class="highlight">corporate strategy</span> and <span class="highlight">digital culture</span>.
+                    </h1>
+                    
+                    <div class="flex flex-col md:flex-row gap-10 items-start md:items-end border-l-2 border-[var(--accent)] pl-8">
+                        <p class="text-xl text-[var(--text-light)] max-w-xl leading-relaxed">
+                            I help visionary organizations clarify their message, modernize their identity, and ship products that define their category.
+                        </p>
+                        
+                        <a href="#work" class="text-lg font-bold border-b-2 border-black pb-1 hover:text-[var(--text-light)] hover:border-[var(--text-light)] transition-all whitespace-nowrap">
+                            View Case Studies ↓
+                        </a>
+                    </div>
                 </div>
+
+                <!-- IMAGE -->
+                <div class="w-full lg:w-[420px] xl:w-[460px] shrink-0 mt-8 lg:mt-0">
+                    <div class="hero-image-frame" style="height: 500px;">
+                        <img src="hero.jpg" alt="Dineth in discussion with a group" />
+                        <div class="hero-image-badge">
+                            Strategy in the Room
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
+
+        <!-- CTA STRIP -->
+        <div class="container-main mb-16 fade-in">
+            <div class="cta-strip rounded-lg">
+                <div class="flex flex-col gap-3 max-w-lg">
+                    <p class="mono text-xs text-[var(--accent)] uppercase tracking-widest font-bold">Limited Availability — 2026</p>
+                    <h3 class="text-2xl md:text-3xl font-serif italic text-white leading-snug">Only <span style="color:var(--accent)">6 spots</span> remaining this quarter.</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">10 strategic partnerships per quarter. 4 are already taken. If you're building something worth remembering, let's talk.</p>
+                    <div class="flex items-center gap-3 mt-1">
+                        <div class="spots-bar flex-1">
+                            <div class="spots-fill"></div>
+                        </div>
+                        <span class="mono text-xs text-gray-400 whitespace-nowrap">6 / 10 open</span>
+                    </div>
+                </div>
+                <a href="https://calendly.com/dnetsachintha/30min" target="_blank" 
+                   class="btn-primary bg-[var(--accent)] text-black hover:bg-white hover:text-black text-sm px-8 py-4 font-bold shrink-0">
+                    Claim Your Spot →
+                </a>
+            </div>
+        </div>
 
         <section id="expertise" class="bg-[#111] text-white py-32 mb-32 relative overflow-hidden">
             <div class="absolute inset-0 pointer-events-none opacity-10" style="background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px); background-size: 40px 40px;"></div>
@@ -315,45 +475,119 @@
             </div>
         </section>
 
+        <!-- SELECTED WORK — CARDS -->
         <section id="work" class="container-main mb-32 fade-in">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-200 pb-6">
                 <h2 class="text-4xl font-normal">Selected Work</h2>
-                <span class="mono text-xs text-[var(--text-light)]">Case Studies</span>
+                <span class="mono text-xs text-[var(--text-light)]">Client Roster</span>
             </div>
 
-            <div class="gallery-grid">
-                <a href="#" class="gallery-item group">
-                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2670&auto=format&fit=crop" class="gallery-img" alt="Apex Fintech">
-                    <div class="gallery-overlay">
-                        <span class="mono text-[var(--accent)] text-xs font-bold mb-2">FINTECH</span>
-                        <h3 class="text-2xl text-white font-serif italic mb-1">Apex FinTech</h3>
-                        <p class="text-gray-300 text-sm">Series B Rebrand & Identity System</p>
+            <div class="work-grid">
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Automotive</p>
+                        <p class="work-card-name">Toyota Lanka</p>
                     </div>
-                </a>
-                <a href="#" class="gallery-item group">
-                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2727&auto=format&fit=crop" class="gallery-img" alt="Naked Theory">
-                    <div class="gallery-overlay">
-                        <span class="mono text-[var(--accent)] text-xs font-bold mb-2">AGENCY</span>
-                        <h3 class="text-2xl text-white font-serif italic mb-1">Naked Theory</h3>
-                        <p class="text-gray-300 text-sm">Consultancy Identity</p>
+                    <p class="work-card-desc">Brand strategy & campaign direction for Sri Lanka's leading automotive distributor.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Automotive</p>
+                        <p class="work-card-name">Sunrise Auto Spa Grand</p>
                     </div>
-                </a>
-                <a href="#" class="gallery-item group">
-                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop" class="gallery-img" alt="Orbit Labs">
-                    <div class="gallery-overlay">
-                        <span class="mono text-[var(--accent)] text-xs font-bold mb-2">WEB3</span>
-                        <h3 class="text-2xl text-white font-serif italic mb-1">Orbit Labs</h3>
-                        <p class="text-gray-300 text-sm">Corporate Narrative</p>
+                    <p class="work-card-desc">Premium identity system and digital presence for Sunrise's flagship auto spa location.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Automotive</p>
+                        <p class="work-card-name">Sunrise Auto Spa</p>
                     </div>
-                </a>
-                <a href="#" class="gallery-item group">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2564&auto=format&fit=crop" class="gallery-img" alt="Velvet">
-                    <div class="gallery-overlay">
-                        <span class="mono text-[var(--accent)] text-xs font-bold mb-2">CPG</span>
-                        <h3 class="text-2xl text-white font-serif italic mb-1">Velvet Coffee</h3>
-                        <p class="text-gray-300 text-sm">Packaging & Campaign</p>
+                    <p class="work-card-desc">Visual identity refresh and social media direction for the core brand.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Conglomerate</p>
+                        <p class="work-card-name">Sunrise Group</p>
                     </div>
-                </a>
+                    <p class="work-card-desc">Group-level brand architecture and positioning across multiple business verticals.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Café & Restaurant</p>
+                        <p class="work-card-name">Grand Roobinzz</p>
+                    </div>
+                    <p class="work-card-desc">Full-scale brand identity and interior-to-digital communication design.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">F&B</p>
+                        <p class="work-card-name">Roobinzz</p>
+                    </div>
+                    <p class="work-card-desc">Packaging design, menu systems, and social brand voice development.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Healthcare</p>
+                        <p class="work-card-name">Sunera Medical Services</p>
+                    </div>
+                    <p class="work-card-desc">Healthcare brand communication, patient-facing digital design, and content strategy.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Engineering</p>
+                        <p class="work-card-name">Golden Land Engineering</p>
+                    </div>
+                    <p class="work-card-desc">Corporate identity system and tender-ready brand collateral for a civil engineering firm.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Electronics</p>
+                        <p class="work-card-name">Micro Electronics</p>
+                    </div>
+                    <p class="work-card-desc">Retail brand refresh, product photography direction, and digital campaign assets.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Lifestyle</p>
+                        <p class="work-card-name">Aura Family Galore</p>
+                    </div>
+                    <p class="work-card-desc">Lifestyle brand identity, visual storytelling and community campaign strategy.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Restaurant</p>
+                        <p class="work-card-name">Moonslice</p>
+                    </div>
+                    <p class="work-card-desc">Brand identity, packaging language, and launch campaign for an artisan food brand.</p>
+                </div>
+
+                <div class="work-card">
+                    <div>
+                        <p class="work-card-tag">Print · Maldives</p>
+                        <p class="work-card-name">Printronics Maldives</p>
+                    </div>
+                    <p class="work-card-desc">B2B brand strategy and digital presence for a Maldivian commercial printing house.</p>
+                </div>
+
+                <div class="work-card" style="grid-column: span 1;">
+                    <div>
+                        <p class="work-card-tag">FinTech · UAE</p>
+                        <p class="work-card-name">Immediate Apex Edge</p>
+                    </div>
+                    <p class="work-card-desc">Strategic brand positioning and marketing communications for a UAE-based trading platform.</p>
+                </div>
+
             </div>
         </section>
 
@@ -361,7 +595,8 @@
             <h2 class="text-3xl font-normal italic mb-12">Written Insights</h2>
             
             <div class="grid grid-cols-1 gap-0">
-                <a href="#" class="article-item group block cursor-pointer">
+
+                <a href="#" class="article-item group block cursor-pointer" data-article="boring-design" onclick="openArticle('boring-design'); return false;">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="md:w-3/4">
                             <span class="mono text-xs text-[var(--accent)] font-bold mb-2 block bg-black text-[var(--accent)] w-max px-2 py-0.5 rounded">STRATEGY</span>
@@ -376,7 +611,7 @@
                     </div>
                 </a>
 
-                <a href="#" class="article-item group block cursor-pointer">
+                <a href="#" class="article-item group block cursor-pointer" data-article="meme-strategy" onclick="openArticle('meme-strategy'); return false;">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="md:w-3/4">
                             <span class="mono text-xs text-[var(--accent)] font-bold mb-2 block bg-black text-[var(--accent)] w-max px-2 py-0.5 rounded">MARKETING</span>
@@ -390,6 +625,37 @@
                         <span class="mono text-xs text-gray-400 shrink-0">JAN 28, 2026</span>
                     </div>
                 </a>
+
+                <a href="#" class="article-item group block cursor-pointer" data-article="brands-ai" onclick="openArticle('brands-ai'); return false;">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="md:w-3/4">
+                            <span class="mono text-xs text-[var(--accent)] font-bold mb-2 block bg-black text-[var(--accent)] w-max px-2 py-0.5 rounded">AI & BRAND</span>
+                            <h3 class="text-2xl font-bold text-[#111] mb-3 leading-tight article-title inline-block">
+                                The Brand That Learned to Think: How Smart Companies Are Adapting to the AI Era
+                            </h3>
+                            <p class="text-[var(--text-light)] text-base max-w-2xl leading-relaxed">
+                                AI is not a feature to add to your roadmap. It is a fundamental shift in how brands communicate, create, and compete — and the window to adapt intelligently is narrowing.
+                            </p>
+                        </div>
+                        <span class="mono text-xs text-gray-400 shrink-0">MAR 08, 2026</span>
+                    </div>
+                </a>
+
+                <a href="#" class="article-item group block cursor-pointer" data-article="positioning" onclick="openArticle('positioning'); return false;">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="md:w-3/4">
+                            <span class="mono text-xs text-[var(--accent)] font-bold mb-2 block bg-black text-[var(--accent)] w-max px-2 py-0.5 rounded">BRAND</span>
+                            <h3 class="text-2xl font-bold text-[#111] mb-3 leading-tight article-title inline-block">
+                                Positioning Is Not a Tagline: The Difference Between Being Known and Being Chosen
+                            </h3>
+                            <p class="text-[var(--text-light)] text-base max-w-2xl leading-relaxed">
+                                Most brands confuse awareness with preference. True positioning lives in the gap between what you say and what customers actually believe about you.
+                            </p>
+                        </div>
+                        <span class="mono text-xs text-gray-400 shrink-0">JAN 10, 2026</span>
+                    </div>
+                </a>
+
             </div>
             
             <div class="mt-8 text-center md:text-left">
@@ -406,9 +672,10 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 border-b border-gray-800 pb-16">
                     <div>
                         <h2 class="text-6xl md:text-8xl font-serif italic mb-8 leading-none tracking-tight">Let's build<br>legacy.</h2>
-                        <p class="text-gray-400 text-lg max-w-md mb-10 leading-relaxed">
+                        <p class="text-gray-400 text-lg max-w-md mb-4 leading-relaxed">
                             Currently accepting select strategic partnerships for Q2 2026.
                         </p>
+                        <p class="mono text-sm text-[var(--accent)] mb-8 font-bold">⬤ &nbsp;Only 6 spots left out of 10</p>
                         <a href="mailto:hello@dnetkuma.com" class="btn-primary bg-white text-black hover:bg-[var(--accent)] text-lg px-8 py-4 inline-flex items-center gap-3 group">
                             <span>hello@dnetkuma.com</span>
                             <svg class="w-5 h-5 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
@@ -453,6 +720,36 @@
 
     </main>
 
+    <!-- ARTICLE MODAL -->
+    <div id="article-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl max-h-[90vh] rounded-lg shadow-2xl flex flex-col relative">
+            
+            <!-- Header -->
+            <div class="flex justify-between items-start p-8 border-b border-gray-100 shrink-0">
+                <div class="pr-8">
+                    <span id="article-modal-tag" class="mono text-xs font-bold bg-black text-[var(--accent)] px-2 py-0.5 rounded mb-3 inline-block"></span>
+                    <h3 id="article-modal-title" class="text-2xl md:text-3xl font-serif font-bold leading-tight text-[#111]"></h3>
+                    <p id="article-modal-date" class="mono text-xs text-gray-400 mt-3"></p>
+                </div>
+                <button onclick="closeArticle()" class="shrink-0 w-9 h-9 flex items-center justify-center border border-gray-200 rounded hover:bg-black hover:text-white transition-colors text-lg font-bold">×</button>
+            </div>
+
+            <!-- Body -->
+            <div id="article-modal-scroll" class="overflow-y-auto px-8 py-8">
+                <div id="article-modal-body" class="article-modal-body"></div>
+            </div>
+
+            <!-- Footer -->
+            <div class="shrink-0 px-8 py-5 border-t border-gray-100 flex justify-between items-center bg-gray-50 rounded-b-lg">
+                <span class="text-xs text-gray-400 mono">D. Kumarage — Written Insights</span>
+                <a href="https://calendly.com/dnetsachintha/30min" target="_blank" class="btn-primary text-xs py-2 px-4">
+                    Work Together →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME MODAL -->
     <div id="game-modal" class="hidden fixed inset-0 z-[100] flex flex-col items-center justify-center p-4">
         <div class="bg-white p-6 rounded-lg shadow-2xl border border-gray-200 max-w-sm w-full relative">
             
@@ -465,7 +762,7 @@
                 <div class="lane-marker lane-1"></div>
                 <div class="lane-marker lane-2"></div>
                 <div id="player-car"></div>
-                </div>
+            </div>
             
             <div class="flex justify-between items-center mt-4">
                 <div class="text-[10px] text-gray-400 font-mono">
@@ -490,6 +787,155 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+        // --- ARTICLE DATA ---
+        const articles = {
+            'boring-design': {
+                tag: 'STRATEGY',
+                title: 'The Art of "Boring" Design: Why Standard UI Converts Better',
+                date: 'FEB 04, 2026',
+                body: `
+                    <p>There is a temptation, deeply embedded in design culture, to chase novelty. To reinvent the button, reimagine the navigation, and rebuild from first principles every time a new project begins. It is seductive. It is also, in most cases, deeply counterproductive.</p>
+
+                    <h4>Familiarity is a feature, not a failure</h4>
+                    <p>When users arrive at an interface, they bring with them years of accumulated muscle memory. The hamburger menu, the sticky header, the left-aligned logo — these are not design choices so much as they are cultural agreements. Breaking them is not innovation. It is friction wearing a creative costume.</p>
+
+                    <blockquote>"The goal of design is not to make the designer feel clever. It is to make the user feel effortless."</blockquote>
+
+                    <p>Research consistently shows that users rate interfaces as more trustworthy and more professional when they adhere to established conventions. Not because those users lack taste, but because trust is built on predictability. And predictability, in digital product design, is the ultimate form of respect for the person on the other side of the screen.</p>
+
+                    <h4>When radical redesigns actually backfire</h4>
+                    <p>Consider the case of enterprise SaaS platforms that undergo dramatic redesigns every two years. The pattern is familiar: a new design team arrives, declares the old product cluttered and dated, and ships a reimagined experience. Six months later, support tickets spike. Retention dips. Power users write angry blog posts. The redesign, however beautiful in isolation, has severed the learned pathways of the people who relied on the product daily.</p>
+
+                    <p>This is not an argument against change. It is an argument for change that earns its novelty. When you depart from convention, you must offer the user something worth the cost of relearning. Usually, that cost is higher than designers anticipate.</p>
+
+                    <h4>The discipline of restraint</h4>
+                    <p>The most mature design choice I have seen senior practitioners make is the decision to solve a problem simply, even when a complex solution was available. To use a standard modal instead of an elaborate custom overlay. To write a clear label instead of a clever one. To let the content lead rather than the container.</p>
+
+                    <p>This is not the absence of craft. It is craft operating at a higher frequency — one where the design becomes invisible because it works so well. That invisibility is the goal. The brands and products that endure are rarely the ones that dazzled in a Dribbble showcase. They are the ones that quietly, consistently made people feel understood.</p>
+
+                    <p>The next time you are about to rebuild something that is already working, ask a harder question: is this redesign for the user, or is it for you?</p>
+                `
+            },
+            'meme-strategy': {
+                tag: 'MARKETING',
+                title: 'Why Your Brand Needs a Meme Strategy (Seriously)',
+                date: 'JAN 28, 2026',
+                body: `
+                    <p>At some point in the last decade, memes stopped being an internet curiosity and became the primary unit of cultural currency. If you are a brand strategist who has not yet taken this seriously, that is not a character flaw — but it is a competitive disadvantage.</p>
+
+                    <h4>What a meme actually is</h4>
+                    <p>Before we talk strategy, let us be precise. A meme, in the contemporary digital sense, is a piece of content — image, video, audio, text — that spreads through a community because it efficiently captures a shared feeling or observation. It is compressed cultural resonance. And compression, in an attention economy, is everything.</p>
+
+                    <blockquote>"A meme is not a joke. It is a handshake. An acknowledgment that you understand the room."</blockquote>
+
+                    <p>This distinction matters enormously for brands. The brands that use memes badly treat them as jokes — as cheap entertainment bolted onto a content calendar. The brands that use them well treat them as vocabulary: a way of proving cultural fluency to an audience that has become extremely sensitive to inauthenticity.</p>
+
+                    <h4>The cringe failure mode</h4>
+                    <p>We have all seen it. A corporation with a social media team that discovered a meme format three weeks after it peaked, deployed it with their logo awkwardly inserted, and received a cascade of comments that ranged from embarrassment to mockery. The failure was not using the meme. The failure was using it without earning it.</p>
+
+                    <p>Earning it requires speed, genuine category knowledge, and the confidence to be selective. Not every meme belongs to every brand. A luxury automotive brand does not need to be on every trend. But it absolutely needs a point of view on internet culture — even if that point of view is strategic restraint.</p>
+
+                    <h4>Building a meme strategy that holds authority</h4>
+                    <p>The brands that navigate this best treat their social voice like an editorial publication, not a broadcast channel. They have a defined cultural beat — the specific corner of the internet their audience lives in — and they develop genuine fluency there before they ever publish a piece of content.</p>
+
+                    <p>They also understand timing with almost algorithmic precision. Meme relevance has a half-life measured in days, sometimes hours. The infrastructure to identify, adapt, and approve content in near-real-time is not a creative luxury. It is a strategic requirement.</p>
+
+                    <p>The brands worth watching in this space are not the ones with the biggest budgets. They are the ones that built their cultural intelligence before they needed it — so that when the moment arrives, they can move with the confidence of someone who belongs there.</p>
+
+                    <p>Because on the internet, belonging is the only credential that matters.</p>
+                `
+            },
+            'brands-ai': {
+                tag: 'AI & BRAND',
+                title: 'The Brand That Learned to Think: How Smart Companies Are Adapting to the AI Era',
+                date: 'MAR 08, 2026',
+                body: `
+                    <p>There is a version of this conversation that is purely tactical: which tools to use, which workflows to automate, how many tokens it costs to generate a product description. That conversation is happening everywhere, and it is largely missing the point. The more important question is not what AI can do for your brand. It is what AI changes about the nature of branding itself.</p>
+
+                    <h4>The attention economy just got a new competitor</h4>
+                    <p>For twenty years, brands competed for human attention in a landscape shaped by human content creation. Supply was constrained by time, talent, and budget. That constraint is dissolving. The cost of producing competent content — copy, visuals, video, audio — is approaching zero. And when supply of something approaches infinity, the value of that thing collapses.</p>
+
+                    <blockquote>"When everyone can say anything fluently, the only differentiator left is having something worth saying."</blockquote>
+
+                    <p>This is the central strategic implication of AI for brands. The brands that are panicking are the ones whose entire value proposition rested on production quality and consistency of output. The brands that are thriving are the ones with a genuine point of view — a reason to exist that cannot be generated on demand.</p>
+
+                    <h4>What AI actually threatens (and what it does not)</h4>
+                    <p>AI is exceptionally good at pattern completion. Give it enough examples of a thing and it will produce more of that thing, competently, at scale. This is a direct threat to brands built on mimicry — the ones that succeeded by executing established category conventions slightly better than the average competitor.</p>
+
+                    <p>It is a much weaker threat to brands built on genuine cultural specificity. A brand rooted in a real community, a real founder story, a real set of values that create genuine friction with the mainstream — these things are not pattern-completable. They require human judgment, human relationships, and human accountability. AI cannot replicate the earned credibility of a brand that has taken a stand and lived with the consequences.</p>
+
+                    <h4>The strategic moves that separate leaders from followers</h4>
+                    <p>The brands navigating this shift well are doing a few things consistently. First, they are using AI to accelerate the work that never mattered strategically — the production layer — which frees human creative energy for the work that actually builds brand equity: insight generation, cultural interpretation, relationship depth.</p>
+
+                    <p>Second, they are investing in distinctiveness with an urgency that many pre-AI brands never needed. When your competitor can replicate your tone of voice in an afternoon, your tone of voice is no longer a moat. What is a moat: the specific community you have built, the proprietary perspective you have earned, the consistent track record of being right about things that mattered.</p>
+
+                    <p>Third — and this is the one most brands are slowest to internalize — they are being transparent about their use of AI in a way that builds rather than erodes trust. The audiences most likely to matter in five years are already developing sharp intuitions about what is generated and what is genuinely authored. Getting ahead of that scrutiny with honesty is almost always the better strategy than hoping no one notices.</p>
+
+                    <h4>The real question</h4>
+                    <p>The brands that will define the next decade are not the ones that adopted AI fastest. They are the ones that used the disruption as a forcing function to become more genuinely themselves — more specific, more committed, more willing to be irrelevant to people who were never really their audience anyway.</p>
+
+                    <p>AI is a mirror. It is showing every brand, with uncomfortable clarity, which parts of their identity were always borrowed and which parts were always real. The ones doing the honest work of that reflection right now will find that AI is not a threat to their brand. It is the best argument for it they have ever had.</p>
+                `
+            },
+            'positioning': {
+                tag: 'BRAND',
+                title: 'Positioning Is Not a Tagline: The Difference Between Being Known and Being Chosen',
+                date: 'JAN 10, 2026',
+                body: `
+                    <p>Most brand conversations begin in the wrong place. They begin with what a company wants to say about itself — the aspirational language of a leadership team that has spent too long in its own building. Positioning is not what you say about yourself. It is what your market believes about you when you are not in the room.</p>
+
+                    <h4>The awareness trap</h4>
+                    <p>Awareness and preference are not the same thing, and conflating them is one of the most expensive mistakes a growing business can make. A brand can be widely known and consistently overlooked. Recognition is a table stake. Preference is the actual prize.</p>
+
+                    <blockquote>"Being top of mind is nothing if you are not top of the shortlist when the decision is being made."</blockquote>
+
+                    <p>This gap — between being known and being chosen — is where positioning lives. And closing it requires a fundamentally different discipline than marketing. It requires honesty about what your customers actually value, not what you believe they should value.</p>
+
+                    <h4>Positioning as a decision framework</h4>
+                    <p>When done well, positioning is not a creative output. It is a decision filter. It answers, with brutal clarity, the question: who is this for, and why should they choose us over every credible alternative? Every piece of marketing, every product decision, every pricing choice should be testable against that answer.</p>
+
+                    <p>The brands that feel coherent — that seem to have a personality, a perspective, an unmistakable quality — are not that way because they were lucky. They are that way because someone made a series of difficult decisions about what they would not be. Positioning is as much about exclusion as it is about assertion.</p>
+
+                    <h4>Where most strategies fail</h4>
+                    <p>The failure point is almost always the same: the positioning statement gets written, approved, framed in the boardroom, and then quietly ignored the moment it creates any internal friction. A sales team that wants to chase a segment the positioning excludes. A product team that wants to add a feature that blurs the category. A founder who wants the brand to mean everything to everyone because it feels safer.</p>
+
+                    <p>Positioning only creates value when it is enforced with consistency across time. That enforcement is an organizational discipline, not a creative one. The brand agencies and consultants who are most useful are not the ones who write the best positioning statements. They are the ones who build the internal conviction to protect the strategy long after the workshop is over.</p>
+
+                    <p>The brands that endure are not the ones with the most memorable taglines. They are the ones whose entire operation — product, service, communication, culture — says the same thing. Not because they repeat themselves, but because they are genuinely aligned around a single, defensible truth.</p>
+
+                    <p>That alignment is worth more than any campaign you will ever run.</p>
+                `
+            }
+        };
+
+        function openArticle(id) {
+            const article = articles[id];
+            if (!article) return;
+
+            document.getElementById('article-modal-tag').textContent = article.tag;
+            document.getElementById('article-modal-title').textContent = article.title;
+            document.getElementById('article-modal-date').textContent = article.date;
+            document.getElementById('article-modal-body').innerHTML = article.body;
+            document.getElementById('article-modal-scroll').scrollTop = 0;
+
+            const modal = document.getElementById('article-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArticle() {
+            const modal = document.getElementById('article-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Close on backdrop click
+        document.getElementById('article-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeArticle();
+        });
+
         // --- GAME LOGIC ---
         const modal = document.getElementById('game-modal');
         const trigger = document.getElementById('game-trigger');
@@ -497,7 +943,6 @@
         const playerCar = document.getElementById('player-car');
         const scoreDisplay = document.getElementById('score');
         
-        // Game State
         let gameRunning = false;
         let score = 0;
         let speed = 5;
@@ -505,27 +950,18 @@
         let lastTime = 0;
         let enemySpawnTimer = 0;
 
-        // Configuration
-        const LANE_WIDTH = 33.33; // Percentage
-        const PLAYER_LANES = [16.66, 50, 83.33]; // Centers of 3 lanes in %
-        let currentLane = 1; // 0, 1, 2 (Start middle)
+        const PLAYER_LANES = [16.66, 50, 83.33];
+        let currentLane = 1;
         let enemies = [];
 
-        // --- CONTROLS ---
         function moveLeft() {
-            if(currentLane > 0) {
-                currentLane--;
-                updatePlayerPos();
-            }
+            if(currentLane > 0) { currentLane--; updatePlayerPos(); }
         }
         function moveRight() {
-            if(currentLane < 2) {
-                currentLane++;
-                updatePlayerPos();
-            }
+            if(currentLane < 2) { currentLane++; updatePlayerPos(); }
         }
         function updatePlayerPos() {
-            playerCar.style.left = `calc(${PLAYER_LANES[currentLane]}% - 20px)`; // -20px is half car width
+            playerCar.style.left = `calc(${PLAYER_LANES[currentLane]}% - 20px)`;
         }
 
         document.addEventListener('keydown', (e) => {
@@ -534,113 +970,60 @@
             if(e.key === 'ArrowRight') moveRight();
         });
         
-        // Mobile Buttons
         document.getElementById('btn-left').addEventListener('touchstart', (e) => { e.preventDefault(); moveLeft(); });
         document.getElementById('btn-right').addEventListener('touchstart', (e) => { e.preventDefault(); moveRight(); });
 
-        // --- GAME LOOP ---
         function startGame() {
-            // Reset
             gameRunning = true;
             score = 0;
             speed = 5;
             currentLane = 1;
             enemies = [];
             scoreDisplay.textContent = '0';
-            
-            // Clear road of old enemies
-            const oldEnemies = document.querySelectorAll('.enemy-car');
-            oldEnemies.forEach(e => e.remove());
-            
+            document.querySelectorAll('.enemy-car').forEach(e => e.remove());
             updatePlayerPos();
-            
-            // Start Loop
             lastTime = performance.now();
             requestAnimationFrame(gameLoop);
         }
 
         function gameLoop(time) {
             if(!gameRunning) return;
-            
             const deltaTime = time - lastTime;
             lastTime = time;
-
-            // Spawn Enemies
             enemySpawnTimer += deltaTime;
-            let spawnRate = Math.max(800, 2000 - (score * 50)); // Gets faster
-            
-            if(enemySpawnTimer > spawnRate) {
-                spawnEnemy();
-                enemySpawnTimer = 0;
-            }
-
-            // Move Enemies
+            let spawnRate = Math.max(800, 2000 - (score * 50));
+            if(enemySpawnTimer > spawnRate) { spawnEnemy(); enemySpawnTimer = 0; }
             moveEnemies();
-
-            // Check Collisions
-            if(checkCollision()) {
-                gameOver();
-                return;
-            }
-
+            if(checkCollision()) { gameOver(); return; }
             animationFrameId = requestAnimationFrame(gameLoop);
         }
 
         function spawnEnemy() {
             const el = document.createElement('div');
             el.classList.add('enemy-car');
-            
-            // Random Lane (0, 1, or 2)
             const lane = Math.floor(Math.random() * 3);
             el.style.left = `calc(${PLAYER_LANES[lane]}% - 20px)`;
             el.style.top = '-80px';
-            
             road.appendChild(el);
-            
-            enemies.push({
-                element: el,
-                y: -80,
-                lane: lane,
-                passed: false
-            });
+            enemies.push({ element: el, y: -80, lane: lane, passed: false });
         }
 
         function moveEnemies() {
-            // Increase speed slightly with score
             const currentSpeed = speed + (score * 0.1);
-
             enemies.forEach((enemy, index) => {
                 enemy.y += currentSpeed;
                 enemy.element.style.top = enemy.y + 'px';
-
-                // Cleanup & Score
-                if(enemy.y > 450) { // Off screen
-                    enemy.element.remove();
-                    enemies.splice(index, 1);
-                } else if (enemy.y > 350 && !enemy.passed) { // Passed player successfully
-                    score++;
-                    scoreDisplay.textContent = score;
-                    enemy.passed = true;
-                }
+                if(enemy.y > 450) { enemy.element.remove(); enemies.splice(index, 1); }
+                else if (enemy.y > 350 && !enemy.passed) { score++; scoreDisplay.textContent = score; enemy.passed = true; }
             });
         }
 
         function checkCollision() {
-            // Player Y is fixed at bottom: approx 310px to 380px (container height 400 - bottom 20 - height 70)
-            const playerTop = 310; 
+            const playerTop = 310;
             const playerBottom = 380;
-
             return enemies.some(enemy => {
-                // Enemy hitbox
-                const enemyTop = enemy.y;
-                const enemyBottom = enemy.y + 70;
-
-                // Lane Check
                 if (enemy.lane === currentLane) {
-                    // Vertical overlap check
-                    if (enemyBottom > playerTop && enemyTop < playerBottom) {
-                        return true;
-                    }
+                    if ((enemy.y + 70) > playerTop && enemy.y < playerBottom) return true;
                 }
                 return false;
             });
@@ -652,11 +1035,9 @@
             closeGame();
         }
 
-        // --- UI TRIGGERS ---
         trigger.addEventListener('click', () => {
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            // Give browser a moment to render modal before starting logic
             setTimeout(startGame, 100);
         });
 
