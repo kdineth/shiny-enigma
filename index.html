@@ -1,1 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dineth | Strategic Brand Partner</title>
+    <meta name="theme-color" content="#192e38">
 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+Sinhala:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #192e38;
+            --navy-deep: #101d24;
+            --ink: #222222;
+            --text-light: #666666;
+            --border: #E5E7EB;
+            --paper: #FFFFFF;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Jost', sans-serif; font-weight: 600; letter-spacing: -0.01em; }
+        .mono { font-family: 'Inter', sans-serif; }
+        .sinhala { font-family: 'Noto Serif Sinhala', serif; }
+
+        .container-main { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
+        @media (min-width: 768px) { .container-main { padding: 0 2rem; } }
+
+        .site-nav { background: rgba(255,255,255,0.96); border-bottom: 1px solid var(--border); }
+
+        /* HAMBURGER */
+        .hamburger-bar { width: 22px; height: 2px; background: var(--navy); border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease; }
+        #menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        #menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) { opacity: 0; }
+        #menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* MOBILE MENU PANEL — transform/opacity only, so it's GPU-composited and never janks */
+        #mobile-menu {
+            position: fixed; top: 5rem; left: 0; right: 0; z-index: 40;
+            background: var(--paper); border-bottom: 1px solid var(--border);
+            box-shadow: 0 12px 24px rgba(16,29,36,0.08);
+            transform: translateY(-8px); opacity: 0; pointer-events: none;
+            transition: opacity 0.22s ease, transform 0.22s ease;
+        }
+        #mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .mobile-menu-link { padding: 0.85rem 0.25rem; border-bottom: 1px solid var(--border); color: var(--ink); }
+        .mobile-menu-link:last-of-type { border-bottom: none; }
+
+        .btn-primary {
+            background-color: var(--navy); color: white; padding: 13px 30px;
+            border-radius: 3px; font-weight: 500; font-size: 0.9rem; letter-spacing: 0.02em;
+            transition: background-color 0.2s; display: inline-block;
+        }
+        .btn-primary:hover { background-color: var(--navy-deep); }
+
+        .btn-outline {
+            border: 1px solid var(--navy); color: var(--navy); padding: 12px 28px;
+            border-radius: 3px; font-weight: 500; font-size: 0.9rem; transition: all 0.2s; display: inline-block;
+        }
+        .btn-outline:hover { background: var(--navy); color: white; }
+
+        /* HERO — full-bleed photo of Dineth, gradient weighted to the bottom so the photo stays clear
+           and only the text zone gets darkened for legibility */
+        .hero-banner {
+            position: relative;
+            background: url('hero.jpg') center 20%/cover no-repeat;
+            min-height: clamp(480px, 88vh, 680px);
+            display: flex; align-items: flex-end; justify-content: center; text-align: center;
+            padding-bottom: 3rem;
+        }
+        @media (min-width: 768px) { .hero-banner { padding-bottom: 4.5rem; } }
+        .hero-banner::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(16,29,36,0) 35%, rgba(16,29,36,0.55) 65%, rgba(16,29,36,0.85) 100%);
+            pointer-events: none;
+        }
+        .hero-banner .container-main { text-shadow: 0 2px 16px rgba(0,0,0,0.55); }
+
+        .divider { width: 48px; height: 3px; background: var(--navy); margin: 0 auto; }
+
+        .plain-card {
+            background: var(--paper); border: 1px solid var(--border); border-radius: 6px;
+            padding: 2.25rem 2rem; text-align: center; transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .plain-card:hover { box-shadow: 0 10px 30px rgba(25,46,56,0.08); transform: translateY(-2px); }
+        .plain-icon {
+            width: 56px; height: 56px; border-radius: 50%; background: var(--navy); color: white;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;
+        }
+
+        .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background-color: var(--border); border: 1px solid var(--border); }
+        @media (min-width: 768px) { .work-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1024px) { .work-grid { grid-template-columns: repeat(4, 1fr); } }
+        .work-card { background-color: var(--paper); padding: 1.75rem 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; min-height: 150px; justify-content: space-between; transition: background-color 0.2s; }
+        .work-card:hover { background-color: #FAFAFA; }
+        .work-card-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); }
+        .work-card-name { font-family: 'Jost', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); }
+        .work-card-desc { font-size: 0.8rem; color: var(--text-light); line-height: 1.5; }
+
+        .article-item { border-bottom: 1px solid var(--border); padding: 1.75rem 0; }
+
+        #article-modal { backdrop-filter: blur(10px); background: rgba(16,29,36,0.55); }
+        .article-modal-body { font-family: 'Inter', sans-serif; font-size: 1.02rem; line-height: 1.8; color: #333; }
+        .article-modal-body p { margin-bottom: 1.2rem; }
+        .article-modal-body h4 { font-family: 'Jost', sans-serif; font-weight: 600; font-size: 0.95rem; margin: 1.75rem 0 0.6rem; }
+        .article-modal-body blockquote { border-left: 3px solid var(--navy); padding: 0.6rem 1.1rem; margin: 1.25rem 0; background: #F7F7F7; font-style: italic; color: #444; }
+
+        .contact-input {
+            width: 100%; background: var(--paper); border: 1px solid var(--border);
+            border-radius: 4px; padding: 12px 14px; color: var(--ink); font-family: 'Inter', sans-serif; font-size: 0.9rem;
+        }
+        .contact-input:focus { outline: none; border-color: var(--navy); }
+        .hours-row { display: flex; justify-content: space-between; padding: 0.65rem 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+        .hours-row:last-child { border-bottom: none; }
+
+        .fade-in { opacity: 0; transform: translateY(16px); transition: 0.7s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        ::selection { background: var(--navy); color: white; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="site-nav fixed top-0 w-full z-50">
+        <div class="container-main h-20 flex items-center justify-between">
+            <div class="flex-1 hidden md:block"></div>
+
+            <div class="hidden md:flex gap-8 flex-1 justify-center text-sm font-medium text-[var(--text-light)] whitespace-nowrap">
+                <a href="#" class="hover:text-[var(--navy)] transition-colors">Home</a>
+                <a href="#expertise" class="hover:text-[var(--navy)] transition-colors">About</a>
+                <a href="#work" class="hover:text-[var(--navy)] transition-colors">Clients</a>
+                <a href="#insights" class="hover:text-[var(--navy)] transition-colors">Insights</a>
+                <a href="#contact" class="hover:text-[var(--navy)] transition-colors">Contact</a>
+            </div>
+
+            <div class="flex-1 flex justify-end items-center">
+                <a href="https://calendly.com/dnetsachintha/30min" target="_blank" class="btn-primary text-sm hidden md:inline-block">Book Consultation</a>
+
+                <button id="menu-toggle" class="md:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 -mr-2" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="md:hidden">
+        <div class="container-main py-6 flex flex-col gap-1 text-base font-medium">
+            <a href="#" class="mobile-menu-link">Home</a>
+            <a href="#expertise" class="mobile-menu-link">About</a>
+            <a href="#work" class="mobile-menu-link">Clients</a>
+            <a href="#insights" class="mobile-menu-link">Insights</a>
+            <a href="#contact" class="mobile-menu-link">Contact</a>
+            <a href="https://calendly.com/dnetsachintha/30min" target="_blank" class="btn-primary text-center mt-4">Book Consultation</a>
+        </div>
+    </div>
+
+    <main class="pt-20">
+
+        <!-- HERO -->
+        <section class="hero-banner">
+            <div class="container-main relative z-10 text-white px-4">
+                <p class="text-xs uppercase tracking-[0.2em] mb-5 text-white/80">Based in Colombo &middot; Available for 2026</p>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 max-w-3xl mx-auto">
+                    Bridging the gap between corporate strategy and digital culture.
+                </h1>
+                <p class="text-lg text-white/85 max-w-xl mx-auto mb-9 leading-relaxed">
+                    I help visionary organizations clarify their message, modernize their identity, and ship products that define their category.
+                </p>
+                <a href="https://calendly.com/dnetsachintha/30min" target="_blank" class="btn-primary text-base px-9 py-4">Schedule a Consultation</a>
+            </div>
+        </section>
+
+        <!-- EXPERTISE / ABOUT — mirrors the template's centered image + text panel -->
+        <section id="expertise" class="py-24 fade-in">
+            <div class="container-main text-center max-w-3xl">
+                <div class="divider mb-6"></div>
+                <h2 class="text-3xl md:text-4xl mb-6">Strategic Brand Partnership</h2>
+                <p class="text-[var(--text-light)] text-lg leading-relaxed">
+                    Dedicated to guiding clients through a disciplined process of positioning, identity, and go-to-market clarity. Every engagement is built on the same principle: clarity before creativity, and positioning before production &mdash; so the brand your market meets is one they choose without hesitation.
+                </p>
+            </div>
+        </section>
+
+        <!-- CTA STRIP -->
+        <section class="py-16 fade-in" style="background: var(--navy);">
+            <div class="container-main text-center text-white max-w-2xl">
+                <p class="text-xs uppercase tracking-[0.2em] mb-3 text-white/70">Limited Availability &mdash; 2026</p>
+                <h3 class="text-2xl md:text-3xl mb-4">Only 6 spots remaining this quarter.</h3>
+                <p class="text-white/80 mb-7 leading-relaxed">10 strategic partnerships per quarter. 4 are already taken. If you're building something worth remembering, let's talk.</p>
+                <a href="https://calendly.com/dnetsachintha/30min" target="_blank" class="btn-primary bg-white text-[var(--navy)] hover:bg-gray-100 px-9 py-4">Claim Your Spot</a>
+            </div>
+        </section>
+
+        <!-- CAPABILITIES -->
+        <section class="py-24 fade-in">
+            <div class="container-main">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <div class="divider mb-6"></div>
+                    <h2 class="text-3xl md:text-4xl mb-3">Capabilities</h2>
+                    <p class="text-[var(--text-light)]">Comprehensive design &amp; strategy services.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="plain-card">
+                        <div class="plain-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+                        <h3 class="text-lg mb-3">Brand Strategy</h3>
+                        <p class="text-sm text-[var(--text-light)]">Positioning, market audits, voice &amp; tone.</p>
+                    </div>
+                    <div class="plain-card">
+                        <div class="plain-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg></div>
+                        <h3 class="text-lg mb-3">Visual Identity</h3>
+                        <p class="text-sm text-[var(--text-light)]">Logo systems, typography, guidelines.</p>
+                    </div>
+                    <div class="plain-card">
+                        <div class="plain-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                        <h3 class="text-lg mb-3">Digital Experience</h3>
+                        <p class="text-sm text-[var(--text-light)]">Web design, UI/UX systems, development.</p>
+                    </div>
+                    <div class="plain-card">
+                        <div class="plain-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+                        <h3 class="text-lg mb-3">Growth &amp; Content</h3>
+                        <p class="text-sm text-[var(--text-light)]">Campaign strategy, social direction, copy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SELECTED WORK -->
+        <section id="work" class="py-24 fade-in" style="background: #FAFAFA;">
+            <div class="container-main">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <div class="divider mb-6"></div>
+                    <h2 class="text-3xl md:text-4xl mb-3">Selected Work</h2>
+                    <p class="text-[var(--text-light)]">Client roster.</p>
+                </div>
+                <div class="work-grid">
+                    <div class="work-card"><div><p class="work-card-tag">Automotive</p><p class="work-card-name">Toyota Lanka</p></div><p class="work-card-desc">Brand strategy &amp; campaign direction for Sri Lanka's leading automotive distributor.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">Automotive</p><p class="work-card-name">Sunrise Auto Spa Grand</p></div><p class="work-card-desc">Premium identity system and digital presence for Sunrise's flagship auto spa location.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">Automotive</p><p class="work-card-name">Sunrise Auto Spa</p></div><p class="work-card-desc">Visual identity refresh and social media direction for the core brand.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">Conglomerate</p><p class="work-card-name">Sunrise Group</p></div><p class="work-card-desc">Group-level brand architecture and positioning across multiple business verticals.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">Caf&eacute; &amp; Restaurant</p><p class="work-card-name">Grand Roobinzz</p></div><p class="work-card-desc">Full-scale brand identity and interior-to-digital communication design.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">F&amp;B</p><p class="work-card-name">Roobinzz</p></div><p class="work-card-desc">Packaging design, menu systems, and social brand voice development.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">Healthcare</p><p class="work-card-name">Sunera Medical Services</p></div><p class="work-card-desc">Healthcare brand communication, patient-facing digital design, and content strategy.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">Engineering</p><p class="work-card-name">Golden Land Engineering</p></div><p class="work-card-desc">Corporate identity system and tender-ready brand collateral for a civil engineering firm.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">Electronics</p><p class="work-card-name">Micro Electronics</p></div><p class="work-card-desc">Retail brand refresh, product photography direction, and digital campaign assets.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">Lifestyle</p><p class="work-card-name">Aura Family Galore</p></div><p class="work-card-desc">Lifestyle brand identity, visual storytelling and community campaign strategy.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">Restaurant</p><p class="work-card-name">Moonslice</p></div><p class="work-card-desc">Brand identity, packaging language, and launch campaign for an artisan food brand.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">Print &middot; Maldives</p><p class="work-card-name">Printronics Maldives</p></div><p class="work-card-desc">B2B brand strategy and digital presence for a Maldivian commercial printing house.</p></div>
+                    <div class="work-card"><div><p class="work-card-tag">FinTech &middot; UAE</p><p class="work-card-name">Immediate Apex Edge</p></div><p class="work-card-desc">Strategic brand positioning and marketing communications for a UAE-based trading platform.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INSIGHTS -->
+        <section id="insights" class="py-24 fade-in">
+            <div class="container-main">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <div class="divider mb-6"></div>
+                    <h2 class="text-3xl md:text-4xl mb-3">Written Insights</h2>
+                </div>
+                <div class="max-w-3xl mx-auto">
+                    <a href="#" class="article-item group block cursor-pointer" onclick="openArticle('boring-design'); return false;">
+                        <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] font-bold mb-2 block uppercase tracking-wide" style="color: var(--navy);">Strategy</span>
+                                <h3 class="text-xl font-semibold mb-2" style="font-family:'Jost',sans-serif;">The Art of "Boring" Design: Why Standard UI Converts Better</h3>
+                                <p class="text-[var(--text-light)] text-sm max-w-xl leading-relaxed">Innovation is good, but familiarity converts. An analysis of why tried-and-true enterprise patterns outperform radical redesigns.</p>
+                            </div>
+                            <span class="text-xs text-[var(--text-light)] shrink-0">Feb 04, 2026</span>
+                        </div>
+                    </a>
+                    <a href="#" class="article-item group block cursor-pointer" onclick="openArticle('meme-strategy'); return false;">
+                        <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] font-bold mb-2 block uppercase tracking-wide" style="color: var(--navy);">Marketing</span>
+                                <h3 class="text-xl font-semibold mb-2" style="font-family:'Jost',sans-serif;">Why Your Brand Needs a Meme Strategy (Seriously)</h3>
+                                <p class="text-[var(--text-light)] text-sm max-w-xl leading-relaxed">Memes are the native language of the internet. Here is how corporate brands can speak it without cringing or losing authority.</p>
+                            </div>
+                            <span class="text-xs text-[var(--text-light)] shrink-0">Jan 28, 2026</span>
+                        </div>
+                    </a>
+                    <a href="#" class="article-item group block cursor-pointer" onclick="openArticle('brands-ai'); return false;">
+                        <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] font-bold mb-2 block uppercase tracking-wide" style="color: var(--navy);">AI &amp; Brand</span>
+                                <h3 class="text-xl font-semibold mb-2" style="font-family:'Jost',sans-serif;">The Brand That Learned to Think: How Smart Companies Are Adapting to the AI Era</h3>
+                                <p class="text-[var(--text-light)] text-sm max-w-xl leading-relaxed">AI is not a feature to add to your roadmap. It is a fundamental shift in how brands communicate, create, and compete.</p>
+                            </div>
+                            <span class="text-xs text-[var(--text-light)] shrink-0">Mar 08, 2026</span>
+                        </div>
+                    </a>
+                    <a href="#" class="article-item group block cursor-pointer" onclick="openArticle('positioning'); return false;">
+                        <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] font-bold mb-2 block uppercase tracking-wide" style="color: var(--navy);">Brand</span>
+                                <h3 class="text-xl font-semibold mb-2" style="font-family:'Jost',sans-serif;">Positioning Is Not a Tagline: The Difference Between Being Known and Being Chosen</h3>
+                                <p class="text-[var(--text-light)] text-sm max-w-xl leading-relaxed">Most brands confuse awareness with preference. True positioning lives in the gap between what you say and what customers actually believe about you.</p>
+                            </div>
+                            <span class="text-xs text-[var(--text-light)] shrink-0">Jan 10, 2026</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT — mirrors the template's "Drop us a line" + hours + subscribe -->
+        <section id="contact" class="py-24 fade-in" style="background: #FAFAFA;">
+            <div class="container-main">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <div class="divider mb-6"></div>
+                    <h2 class="text-3xl md:text-4xl mb-3">Contact Us</h2>
+                    <p class="text-[var(--text-light)]">Drop us a line!</p>
+                </div>
+
+                <div class="grid lg:grid-cols-[1.3fr_1fr] gap-14 max-w-4xl mx-auto">
+                    <form onsubmit="event.preventDefault(); alert('Thanks — I\'ll be in touch shortly.'); this.reset();" class="grid sm:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Name" required class="contact-input sm:col-span-1">
+                        <input type="email" placeholder="Email *" required class="contact-input sm:col-span-1">
+                        <input type="tel" placeholder="Phone" class="contact-input sm:col-span-2">
+                        <textarea placeholder="Tell me a bit about your brand" rows="4" class="contact-input sm:col-span-2"></textarea>
+                        <button type="submit" class="btn-primary sm:col-span-2 py-3">Send</button>
+                    </form>
+
+                    <div class="flex flex-col gap-8">
+                        <div>
+                            <h4 class="text-base font-semibold mb-3">Better yet, book a call</h4>
+                            <p class="text-sm text-[var(--text-light)] mb-4 leading-relaxed">Prefer to talk it through directly? Grab a slot on the calendar.</p>
+                            <a href="https://calendly.com/dnetsachintha/30min" target="_blank" class="btn-outline text-sm">Book Consultation</a>
+                        </div>
+
+                        <div>
+                            <h4 class="text-base font-semibold mb-3">Hours &mdash; Colombo Time</h4>
+                            <div class="hours-row"><span class="text-[var(--text-light)]">Mon &ndash; Fri</span><span class="font-medium">09:00 am &ndash; 06:00 pm</span></div>
+                            <div class="hours-row"><span class="text-[var(--text-light)]">Saturday</span><span class="font-medium">By appointment</span></div>
+                            <div class="hours-row"><span class="text-[var(--text-light)]">Sunday</span><span class="font-medium">Closed</span></div>
+                        </div>
+
+                        <a href="mailto:hello@dnetkuma.com" class="text-sm font-medium hover:underline" style="color: var(--navy);">hello@dnetkuma.com &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUBSCRIBE -->
+        <section class="py-16 fade-in">
+            <div class="container-main text-center max-w-lg mx-auto">
+                <h4 class="text-xl mb-2">Subscribe</h4>
+                <p class="text-sm text-[var(--text-light)] mb-6">Sign up to hear occasional notes on brand strategy and positioning.</p>
+                <form onsubmit="event.preventDefault(); alert('Subscribed.'); this.reset();" class="flex gap-2">
+                    <input type="email" placeholder="Email" required class="contact-input flex-1">
+                    <button type="submit" class="btn-primary shrink-0">Sign up</button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="py-10 border-t" style="border-color: var(--border);">
+            <div class="container-main text-center text-xs text-[var(--text-light)]">
+                <span>&copy; 2026 DINETH <span class="sinhala">| කුමාරගේ</span> &mdash; All Rights Reserved.</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- ARTICLE MODAL -->
+    <div id="article-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl max-h-[90vh] rounded-lg shadow-2xl flex flex-col relative">
+            <div class="flex justify-between items-start p-8 border-b" style="border-color: var(--border);">
+                <div class="pr-8">
+                    <span id="article-modal-tag" class="text-xs font-bold uppercase tracking-wide mb-3 inline-block" style="color: var(--navy);"></span>
+                    <h3 id="article-modal-title" class="text-2xl font-semibold leading-tight" style="font-family:'Jost',sans-serif;"></h3>
+                    <p id="article-modal-date" class="text-xs text-gray-400 mt-3"></p>
+                </div>
+                <button onclick="closeArticle()" class="shrink-0 w-9 h-9 flex items-center justify-center border rounded hover:bg-[var(--navy)] hover:text-white transition-colors text-lg font-bold" style="border-color: var(--border);">&times;</button>
+            </div>
+            <div class="overflow-y-auto px-8 py-8">
+                <div id="article-modal-body" class="article-modal-body"></div>
+            </div>
+            <div class="px-8 py-5 border-t flex justify-between items-center bg-gray-50 rounded-b-lg" style="border-color: var(--border);">
+                <span class="text-xs text-gray-400">D. Kumarage &mdash; Written Insights</span>
+                <a href="https://calendly.com/dnetsachintha/30min" target="_blank" class="btn-primary text-xs py-2 px-4">Work Together</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function openMenu() {
+            mobileMenu.classList.add('open');
+            menuToggle.setAttribute('aria-expanded', 'true');
+        }
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+            isOpen ? closeMenu() : openMenu();
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+        window.addEventListener('resize', () => { if (window.innerWidth >= 768) closeMenu(); });
+    </script>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const articles = {
+            'boring-design': { tag: 'Strategy', title: 'The Art of "Boring" Design: Why Standard UI Converts Better', date: 'Feb 04, 2026', body: `
+                <p>There is a temptation, deeply embedded in design culture, to chase novelty. To reinvent the button, reimagine the navigation, and rebuild from first principles every time a new project begins. It is seductive. It is also, in most cases, deeply counterproductive.</p>
+                <h4>Familiarity is a feature, not a failure</h4>
+                <p>When users arrive at an interface, they bring with them years of accumulated muscle memory. Breaking established conventions is not innovation. It is friction wearing a creative costume.</p>
+                <blockquote>"The goal of design is not to make the designer feel clever. It is to make the user feel effortless."</blockquote>
+                <p>Research consistently shows users rate interfaces as more trustworthy when they adhere to established conventions, because trust is built on predictability.</p>
+                <h4>The discipline of restraint</h4>
+                <p>The most mature design choice senior practitioners make is to solve a problem simply. That invisibility is the goal &mdash; the brands that endure quietly make people feel understood.</p>
+            `},
+            'meme-strategy': { tag: 'Marketing', title: 'Why Your Brand Needs a Meme Strategy (Seriously)', date: 'Jan 28, 2026', body: `
+                <p>At some point in the last decade, memes stopped being an internet curiosity and became the primary unit of cultural currency.</p>
+                <h4>What a meme actually is</h4>
+                <p>A meme spreads through a community because it efficiently captures a shared feeling. It is compressed cultural resonance.</p>
+                <blockquote>"A meme is not a joke. It is a handshake."</blockquote>
+                <h4>The cringe failure mode</h4>
+                <p>A brand that deploys a meme format weeks after it peaked receives mockery. The failure is using it without earning it.</p>
+                <p>Because on the internet, belonging is the only credential that matters.</p>
+            `},
+            'brands-ai': { tag: 'AI & Brand', title: 'The Brand That Learned to Think: How Smart Companies Are Adapting to the AI Era', date: 'Mar 08, 2026', body: `
+                <p>The more important question is not what AI can do for your brand. It is what AI changes about the nature of branding itself.</p>
+                <h4>The attention economy just got a new competitor</h4>
+                <p>The cost of producing competent content is approaching zero, and value collapses as supply approaches infinity.</p>
+                <blockquote>"When everyone can say anything fluently, the only differentiator left is having something worth saying."</blockquote>
+                <h4>What AI actually threatens</h4>
+                <p>AI is a direct threat to brands built on mimicry, and a weaker threat to brands rooted in real community and earned credibility.</p>
+                <p>AI is a mirror, showing every brand which parts of its identity were borrowed and which were always real.</p>
+            `},
+            'positioning': { tag: 'Brand', title: 'Positioning Is Not a Tagline: The Difference Between Being Known and Being Chosen', date: 'Jan 10, 2026', body: `
+                <p>Positioning is not what you say about yourself. It is what your market believes about you when you are not in the room.</p>
+                <h4>The awareness trap</h4>
+                <p>A brand can be widely known and consistently overlooked. Recognition is a table stake. Preference is the actual prize.</p>
+                <blockquote>"Being top of mind is nothing if you are not top of the shortlist when the decision is being made."</blockquote>
+                <h4>Where most strategies fail</h4>
+                <p>Positioning only creates value when enforced with consistency across time &mdash; an organizational discipline, not a creative one.</p>
+            `}
+        };
+
+        function openArticle(id) {
+            const a = articles[id]; if (!a) return;
+            document.getElementById('article-modal-tag').textContent = a.tag;
+            document.getElementById('article-modal-title').textContent = a.title;
+            document.getElementById('article-modal-date').textContent = a.date;
+            document.getElementById('article-modal-body').innerHTML = a.body;
+            const modal = document.getElementById('article-modal');
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeArticle() {
+            const modal = document.getElementById('article-modal');
+            modal.classList.add('hidden'); modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('article-modal').addEventListener('click', function(e) { if (e.target === this) closeArticle(); });
+    </script>
+</body>
+</html>
